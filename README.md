@@ -105,7 +105,7 @@ A dashboard was created to visualize:
 
 ### 🔹 Dashboard Visualization
 
-![Dashboard](Screenshots/dashboard.png)
+![Dashboard](Screenshots/Final_Dashboard.png)
 
 ---
 
