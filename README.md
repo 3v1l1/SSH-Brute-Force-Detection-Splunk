@@ -93,7 +93,7 @@ A dashboard was created to visualize:
 
 ### 🔹 Attack Simulation (Kali → Target)
 
-![Attack](Screenshots/attack_simulation.png)
+![Attack](Screenshots/attack_simulation_kali.png)
 
 ### 🔹 Detection Query Output
 
