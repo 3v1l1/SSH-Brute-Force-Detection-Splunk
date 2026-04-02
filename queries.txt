@@ -1,3 +1,5 @@
+These are Splunk SPL queries used for detecting SSH brute force attacks in the SOC lab environment.
+
 ##############################################
 # 1. Basic Search – Failed SSH Logins
 ##############################################
