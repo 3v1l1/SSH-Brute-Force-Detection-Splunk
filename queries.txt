@@ -1,1 +1,82 @@
+##############################################
+# 1. Basic Search – Failed SSH Logins
+##############################################
+sourcetype=auth_log "Failed password"
 
+
+##############################################
+# 2. Extract Username and Source IP
+##############################################
+sourcetype=auth_log "Failed password"
+| rex "Failed password for (?<user>\w+) from (?<src>\d+\.\d+\.\d+\.\d+)"
+
+
+##############################################
+# 3. Count Attempts by User and IP
+##############################################
+sourcetype=auth_log "Failed password"
+| rex "Failed password for (?<user>\w+) from (?<src>\d+\.\d+\.\d+\.\d+)"
+| stats count by user, src
+
+
+##############################################
+# 4. Detect Brute Force Attack (Threshold)
+##############################################
+sourcetype=auth_log "Failed password"
+| rex "Failed password for (?<user>\w+) from (?<src>\d+\.\d+\.\d+\.\d+)"
+| stats count by user, src
+| where count > 3
+
+
+##############################################
+# 5. Time-Based Attack Trend
+##############################################
+sourcetype=auth_log "Failed password"
+| timechart count span=5m
+
+
+##############################################
+# 6. Top Attacking IPs
+##############################################
+sourcetype=auth_log "Failed password"
+| rex "from (?<src>\d+\.\d+\.\d+\.\d+)"
+| stats count by src
+| sort -count
+
+
+##############################################
+# 7. Successful Logins (Comparison)
+##############################################
+sourcetype=auth_log "Accepted password"
+
+
+##############################################
+# 8. Failed vs Successful Login Comparison
+##############################################
+sourcetype=auth_log ("Failed password" OR "Accepted password")
+| eval status=if(searchmatch("Failed password"), "Failed", "Success")
+| stats count by status
+
+
+##############################################
+# 9. Identify Targeted Users
+##############################################
+sourcetype=auth_log "Failed password"
+| rex "Failed password for (?<user>\w+)"
+| stats count by user
+| sort -count
+
+
+##############################################
+# 10. Detect Suspicious IP (High Activity)
+##############################################
+sourcetype=auth_log "Failed password"
+| rex "from (?<src>\d+\.\d+\.\d+\.\d+)"
+| stats count by src
+| where count > 5
+
+
+##############################################
+# 11. Raw Log Investigation
+##############################################
+sourcetype=auth_log
