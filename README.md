@@ -89,23 +89,23 @@ A dashboard was created to visualize:
 
 ### 🔹 Alert Configuration
 
-![Alert](screenshots/alert.png)
+![Alert](Screenshots/alert.png)
 
 ### 🔹 Attack Simulation (Kali → Target)
 
-![Attack](screenshots/attack_simulation.png)
+![Attack](Screenshots/attack_simulation.png)
 
 ### 🔹 Detection Query Output
 
-![Query](screenshots/detection_query.png)
+![Query](Screenshots/detection_query.png)
 
 ### 🔹 Raw Logs (Failed Attempts)
 
-![Logs](screenshots/raw_logs.png)
+![Logs](Screenshots/raw_logs.png)
 
 ### 🔹 Dashboard Visualization
 
-![Dashboard](screenshots/dashboard.png)
+![Dashboard](Screenshots/dashboard.png)
 
 ---
 
