@@ -57,6 +57,7 @@ index=*
 sourcetype=auth_log "Failed password"
 | rex "Failed password for (?<user>\w+) from (?<src>\d+\.\d+\.\d+\.\d+)"
 | stats count by user, src
+| where count >= 3
 | sort - count
 ```
 
@@ -74,18 +75,19 @@ sourcetype=auth_log "Failed password"
 ## 🚨 Detection Outcome
 
 Example result:
-
 ```
-user = dark
-src = 192.168.100.20
-count = 4
+user = dark  
+src = 192.168.100.20  
+count = 4  
 ```
+This indicates repeated failed login attempts from a single IP, which is a strong indicator of a brute force attack.
 
-👉 This indicates:
+---
 
-* One IP attempted login multiple times
-* Strong indicator of brute force activity
+## 🧭 MITRE ATT&CK Mapping
 
+Technique: T1110 – Brute Force  
+Description: Adversaries attempt to gain access by trying multiple passwords.
 ---
 
 ## 🚨 Alert Configuration
