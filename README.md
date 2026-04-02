@@ -84,12 +84,6 @@ This indicates repeated failed login attempts from a single IP, which is a stron
 
 ---
 
-## 🧭 MITRE ATT&CK Mapping
-
-Technique: T1110 – Brute Force  
-Description: Adversaries attempt to gain access by trying multiple passwords.
----
-
 ## 🚨 Alert Configuration
 
 * Trigger: Number of results > 0
