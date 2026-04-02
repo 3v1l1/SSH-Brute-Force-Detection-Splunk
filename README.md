@@ -2,49 +2,56 @@
 
 ## 📌 Project Overview
 
-This project demonstrates detection of SSH brute force attacks using Splunk in a simulated SOC (Security Operations Center) environment.
+This project simulates an SSH brute force attack and demonstrates how to detect it using Splunk SIEM.
 
-The objective is to simulate an attack, ingest logs into Splunk, and build detection logic to identify malicious login attempts.
+The goal is to replicate a real SOC (Security Operations Center) workflow:
+
+* Simulate attack
+* Ingest logs
+* Detect malicious behavior
+* Visualize and alert
 
 ---
 
-## 🧪 Lab Architecture
+## 🧪 Lab Setup
 
-* **Attacker Machine:** Kali Linux
-* **Target Machine:** Ubuntu Server
-* **SIEM Platform:** Splunk Cloud
-* **Log Source:** `/var/log/auth.log`
-* **Log Ingestion Method:** HTTP Event Collector (HEC)
+| Component  | Details                    |
+| ---------- | -------------------------- |
+| Attacker   | Kali Linux                 |
+| Target     | Ubuntu Server              |
+| SIEM       | Splunk Cloud               |
+| Log Source | /var/log/auth.log          |
+| Ingestion  | HTTP Event Collector (HEC) |
 
 ---
 
 ## ⚔️ Attack Simulation
 
-* Performed SSH login attempts from Kali to Ubuntu server
-* Generated multiple failed login attempts (brute force behavior)
-* Logs were captured from the authentication log file
+* Multiple SSH login attempts were performed from Kali
+* Incorrect passwords were used intentionally
+* This generated repeated "Failed password" logs
 
-Brute force attacks involve repeated login attempts using different credentials to gain unauthorized access.
+👉 This behavior mimics a **brute force attack (MITRE ATT&CK T1110)**
 
 ---
 
 ## 📥 Log Ingestion
 
-Logs were forwarded to Splunk using HTTP Event Collector (HEC).
+Logs were forwarded to Splunk using HEC.
 
-Verification query used:
+Verification query:
 
 ```
 index=*
 ```
 
-This confirmed successful ingestion of logs into Splunk.
+✔ Confirms logs are successfully ingested
 
 ---
 
 ## 🔍 Detection Logic
 
-The following Splunk query was used to detect brute force attempts:
+### SPL Query:
 
 ```
 sourcetype=auth_log "Failed password"
@@ -53,85 +60,103 @@ sourcetype=auth_log "Failed password"
 | sort - count
 ```
 
-### 🧠 Explanation:
+### 🧠 How it works:
 
-* Searches for failed SSH login attempts
+* Filters failed SSH login attempts
 * Extracts:
 
-  * Username (`user`)
-  * Source IP (`src`)
-* Counts number of attempts per user and IP
-* Identifies suspicious repeated login attempts
+  * Username
+  * Source IP
+* Counts number of attempts per IP
+
+---
+
+## 🚨 Detection Outcome
+
+Example result:
+
+```
+user = dark
+src = 192.168.100.20
+count = 4
+```
+
+👉 This indicates:
+
+* One IP attempted login multiple times
+* Strong indicator of brute force activity
 
 ---
 
 ## 🚨 Alert Configuration
 
-* **Trigger Condition:** Number of results > 0
-* **Schedule:** Hourly
-* **Action:** Add to Triggered Alerts
-
-This enables real-time monitoring of brute force activity.
+* Trigger: Number of results > 0
+* Schedule: Hourly
+* Action: Add to Triggered Alerts
 
 ---
 
 ## 📊 Dashboard
 
-A dashboard was created to visualize:
+Dashboard visualizes:
 
 * Failed login attempts per IP
 * Attack frequency over time
-* User-based attack targeting
+* Suspicious activity patterns
 
 ---
 
-## 📸 Project Screenshots
+## 📸 Screenshots
 
-### 🔹 Alert Configuration
+### 🔹 Attack Simulation
 
-![Alert](Screenshots/alert.png)
+![Attack](Screenshots/attack_simulation.png)
 
-### 🔹 Attack Simulation (Kali → Target)
+### 🔹 Log Ingestion
 
-![Attack](Screenshots/attack_simulation_kali.png)
+![Logs](Screenshots/log_ingestion.png)
 
-### 🔹 Detection Query Output
+### 🔹 Raw Logs
+
+![Raw Logs](Screenshots/raw_logs.png)
+
+### 🔹 Detection Query
 
 ![Query](Screenshots/detection_query.png)
 
-### 🔹 Raw Logs (Failed Attempts)
-
-![Logs](Screenshots/raw_logs.png)
-
-### 🔹 Dashboard Visualization
+### 🔹 Dashboard
 
 ![Dashboard](Screenshots/Final_Dashboard.png)
+
+### 🔹 Alert
+
+![Alert](Screenshots/alert.png)
 
 ---
 
 ## 🧠 Key Learnings
 
-* Understanding SSH authentication logs
-* Writing SPL (Splunk Processing Language) queries
-* Detecting brute force attack patterns
-* Log ingestion using HEC
-* Building alerts and dashboards in Splunk
+* Understanding Linux authentication logs
+* Writing SPL queries for threat detection
+* Detecting brute force patterns
+* Building alerts in Splunk
+* Creating SOC dashboards
 
 ---
 
 ## 🚀 Future Improvements
 
-* Implement threshold-based alerting (e.g., >5 attempts)
-* Add geo-location enrichment for attacker IP
-* Detect successful login after brute force attempts
-* Integrate automated response (blocking IPs)
+* Add threshold-based detection (e.g., count > 5)
+* Detect successful login after brute force
+* Add Geo-IP enrichment
+* Automate response (block IP)
 
 ---
 
 ## 🏁 Conclusion
 
-This project demonstrates how a SOC analyst can detect SSH brute force attacks using log analysis and SIEM tools like Splunk.
+This project demonstrates how brute force attacks can be detected using log analysis and SIEM tools like Splunk.
 
-It simulates real-world attack scenarios and showcases detection, monitoring, and visualization techniques used in cybersecurity operations.
+It replicates a real-world SOC use case and provides hands-on experience with attack detection and monitoring.
 
 ---
