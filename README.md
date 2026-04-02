@@ -110,7 +110,7 @@ Dashboard visualizes:
 
 ### 🔹 Attack Simulation
 
-![Attack](Screenshots/attack_simulation.png)
+![Attack](Screenshots/attack_simulation_kali.png)
 
 ### 🔹 Log Ingestion
 
